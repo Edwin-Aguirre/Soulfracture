@@ -1,0 +1,14 @@
+[gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://oicsn0vcxo4j"]
+
+[ext_resource type="Shader" uid="uid://cag1xtoiu3568" path="res://Materials/sway.gdshader" id="1_c3wb3"]
+[ext_resource type="Texture2D" uid="uid://bw8oievbsxff8" path="res://Assets/Environment/Tree_Group_Vege_castle-colour-palette.png" id="2_c3wb3"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_c3wb3")
+shader_parameter/sway_strength = 0.3
+shader_parameter/sway_speed = 1.5
+shader_parameter/wind_direction = Vector3(1, 0, 0)
+shader_parameter/object_height = 10.0
+shader_parameter/variation_scale = 5.0
+shader_parameter/albedo_texture = ExtResource("2_c3wb3")
