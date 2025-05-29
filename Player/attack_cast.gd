@@ -6,5 +6,7 @@ func deal_damage() -> void:
 		return
 	
 	var collider = get_collider()
-	print(collider)
-	add_exception(collider)
+	
+	if collider is Enemy:
+		collider.health_component.take_damage(15.0)
+		add_exception(collider)

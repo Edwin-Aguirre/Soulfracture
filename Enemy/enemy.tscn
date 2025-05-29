@@ -1,0 +1,77 @@
+[gd_scene load_steps=6 format=3 uid="uid://bumxhlt368cji"]
+
+[ext_resource type="PackedScene" uid="uid://6i38w2poape5" path="res://Player/rig.tscn" id="1_2pb1h"]
+[ext_resource type="Script" uid="uid://cue4vjmyg55xs" path="res://Enemy/enemy.gd" id="1_px1sc"]
+[ext_resource type="PackedScene" uid="uid://ccqiaxecpb3fi" path="res://Player/health_component.tscn" id="3_am0pq"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_px1sc"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_am0pq"]
+
+[node name="Enemy" type="CharacterBody3D"]
+collision_layer = 9
+script = ExtResource("1_px1sc")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_px1sc")
+
+[node name="Rig" parent="." instance=ExtResource("1_2pb1h")]
+
+[node name="Skeleton3D" parent="Rig/CharacterRig/GameRig" index="0"]
+bones/0/position = Vector3(3.37508e-15, 0.892509, -0.0481736)
+bones/2/rotation = Quaternion(-0.00484406, -0.000464739, 0.00321579, 0.999983)
+bones/3/rotation = Quaternion(-0.099095, -0.000413914, 0.00851828, 0.995041)
+bones/4/rotation = Quaternion(0.279328, 1.41201e-08, 9.65754e-08, 0.960196)
+bones/6/rotation = Quaternion(-0.153309, -1.18191e-07, -1.57517e-08, 0.988178)
+bones/7/position = Vector3(-3.96691e-08, 0.892509, -0.0481735)
+bones/8/position = Vector3(-6.07396e-08, 0.892509, -0.0481735)
+bones/9/position = Vector3(0.131144, 0.958713, -0.0351291)
+bones/9/rotation = Quaternion(0.992537, 0.0211117, -0.0308373, 0.11608)
+bones/11/rotation = Quaternion(0.430534, -0.000700603, 0.000334348, 0.902574)
+bones/13/rotation = Quaternion(-0.756035, 0.0119018, 0.0244284, 0.653967)
+bones/15/position = Vector3(-0.131144, 0.958713, -0.0351291)
+bones/15/rotation = Quaternion(0.972071, -0.00599195, 0.027176, 0.233031)
+bones/17/rotation = Quaternion(0.453931, 0.00334876, -0.00170612, 0.891029)
+bones/19/rotation = Quaternion(-0.692403, -0.0282148, -0.000431308, 0.720959)
+bones/21/position = Vector3(0.0251286, 1.42285, 0.0407572)
+bones/21/rotation = Quaternion(-0.500619, -0.25491, -0.394716, 0.727049)
+bones/22/position = Vector3(0.187477, 1.45894, -0.028392)
+bones/22/rotation = Quaternion(0.059275, -0.158236, 0.973914, -0.151457)
+bones/23/rotation = Quaternion(4.89658e-08, -0.00833146, -1.5602e-08, 0.999965)
+bones/24/rotation = Quaternion(0.281292, -0.00824938, -0.0168919, 0.959438)
+bones/46/position = Vector3(-0.0113635, 1.42285, 0.0407572)
+bones/46/rotation = Quaternion(-0.52531, 0.204714, 0.360219, 0.743225)
+bones/47/position = Vector3(-0.162879, 1.45908, -0.0496318)
+bones/47/rotation = Quaternion(-0.0976426, -0.132919, 0.971217, 0.17186)
+bones/48/rotation = Quaternion(6.78343e-08, -0.00176803, 4.96821e-08, 0.999998)
+bones/49/rotation = Quaternion(0.311462, -0.00176764, 0.0285988, 0.949826)
+bones/71/position = Vector3(0.127191, 1.34049, -0.0269723)
+bones/71/rotation = Quaternion(1.89831e-08, 0.617782, 0.786349, -4.65925e-08)
+bones/72/position = Vector3(-0.113426, 1.34049, -0.0269723)
+bones/72/rotation = Quaternion(1.89832e-08, 0.617782, 0.786349, -4.65924e-08)
+
+[node name="Knight_01" parent="Rig/CharacterRig/GameRig/Skeleton3D" index="0"]
+visible = false
+
+[node name="Villager_01" parent="Rig/CharacterRig/GameRig/Skeleton3D" index="2"]
+visible = true
+
+[node name="RightHandBone" parent="Rig" index="2"]
+transform = Transform3D(-0.962343, -0.2708, -0.0237163, 0.246428, -0.905896, 0.344421, -0.114754, 0.325607, 0.938515, -0.336695, 0.973295, -0.0486893)
+
+[node name="LeftHandBone" parent="Rig" index="3"]
+transform = Transform3D(-0.970488, 0.239192, 0.0306539, -0.225099, -0.944146, 0.240662, 0.0865064, 0.22666, 0.970125, 0.344309, 0.96306, -0.0619471)
+
+[node name="HealthComponent" parent="." instance=ExtResource("3_am0pq")]
+
+[node name="PlayerDetector" type="ShapeCast3D" parent="."]
+shape = SubResource("CapsuleShape3D_am0pq")
+target_position = Vector3(0, 1, 1)
+collision_mask = 4
+
+[connection signal="heavy_attack" from="Rig" to="." method="_on_rig_heavy_attack"]
+[connection signal="defeat" from="HealthComponent" to="." method="_on_health_component_defeat"]
+
+[editable path="Rig"]
+[editable path="Rig/CharacterRig"]
