@@ -1,7 +1,7 @@
 extends CharacterBody3D
 class_name Player
 
-const SPEED = 5.0
+
 const JUMP_VELOCITY = 4.5
 const DECAY = 8.0
 
@@ -10,12 +10,14 @@ var _look:= Vector2.ZERO
 var _attack_direction:= Vector3.ZERO
 
 
-@export var mouse_sensitivity: float = 0.001
+@export var mouse_sensitivity: float = 0.0025
 @export var controller_sensitivity: float = 0.025
 @export var min_boundary: float = -60.0
 @export var max_boundary: float = -10.0
 @export var animation_decay: float = 5.0
 @export var attack_move_speed: float = 3.0
+@export_category("RPG Stats")
+@export var stats: CharacterStats
 
 
 @onready var horizontal_pivot: Node3D = $HorizontalPivot
@@ -30,7 +32,10 @@ var _attack_direction:= Vector3.ZERO
 
 func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-	health_component.update_max_health(30.0)
+	health_component.update_max_health(stats.get_max_hp())
+	stats.level_up_notification.connect(
+		func(): health_component.update_max_health(stats.get_max_hp()) 
+	)
 
 
 func _physics_process(delta: float) -> void:
@@ -68,6 +73,8 @@ func _unhandled_input(event: InputEvent) -> void:
 			slash_attack()
 		if event.is_action_pressed("heavy_attack"):
 			rig.travel("Overhead") 
+	if event.is_action_pressed("debug_gain_xp"):
+		stats.xp += 10000
 
 
 func controller_camera_movement() -> void:
@@ -124,15 +131,15 @@ func handle_slashing_physics_frame(delta: float) -> void:
 	velocity.x = _attack_direction.x * attack_move_speed
 	velocity.z = _attack_direction.z * attack_move_speed
 	look_toward_direction(_attack_direction, delta)
-	attack_cast.deal_damage()
+	attack_cast.deal_damage(10.0 + stats.get_damage_modifier(), stats.get_crit_chance())
 
 
 func handle_idle_physics_frame(delta: float, direction: Vector3) -> void:
 	if not rig.is_idle() and not rig.is_dashing():
 		return
 	
-	velocity.x = exponential_decay(velocity.x, direction.x * SPEED, DECAY, delta)
-	velocity.z = exponential_decay(velocity.z, direction.z * SPEED, DECAY, delta)
+	velocity.x = exponential_decay(velocity.x, direction.x * stats.get_base_speed(), DECAY, delta)
+	velocity.z = exponential_decay(velocity.z, direction.z * stats.get_base_speed(), DECAY, delta)
 	
 	if direction:
 		look_toward_direction(direction, delta)
@@ -157,4 +164,4 @@ func _on_health_component_defeat() -> void:
 
 
 func _on_rig_heavy_attack() -> void:
-	area_attack.deal_damage(50)
+	area_attack.deal_damage(10.0 + stats.get_damage_modifier(), stats.get_crit_chance())
