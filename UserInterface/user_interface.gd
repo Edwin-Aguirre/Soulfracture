@@ -16,7 +16,14 @@ func _unhandled_input(event: InputEvent) -> void:
 		if inventory.visible:
 			close_menu()
 		else:
+			# Hide mouse only if opened via controller button
+			if event is InputEventJoypadButton:
+				Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
+			else:
+				# Show mouse if opened via keyboard
+				Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 			open_menu()
+
 
 
 func update_stats_display() -> void:
@@ -35,7 +42,6 @@ func update_health() -> void:
 func open_menu() -> void:
 	inventory.visible = true
 	get_tree().paused = true
-	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	inventory.update_gear_stats()
 
 
