@@ -29,6 +29,7 @@ var _attack_direction:= Vector3.ZERO
 @onready var collision_shape_3d: CollisionShape3D = $CollisionShape3D
 @onready var area_attack: ShapeCast3D = $RigPivot/AreaAttack
 @onready var user_interface: Control = $UserInterface
+@onready var interaction_cast: ShapeCast3D = $RigPivot/InteractionCast
 
 
 func _ready() -> void:
@@ -39,6 +40,7 @@ func _ready() -> void:
 	)
 	stats.update_stats.connect(user_interface.update_stats_display)
 	user_interface.update_stats_display()
+	user_interface.inventory.armor_changed.connect(health_component.update_armor_value)
 
 
 func _physics_process(delta: float) -> void:
@@ -57,6 +59,7 @@ func _physics_process(delta: float) -> void:
 	handle_idle_physics_frame(delta, direction)
 	handle_slashing_physics_frame(delta)
 	handle_overhead_physics_frame()
+	interaction_cast.check_interactions()
 	
 	# Add the gravity.
 	if not is_on_floor():
@@ -134,7 +137,7 @@ func handle_slashing_physics_frame(delta: float) -> void:
 	velocity.x = _attack_direction.x * attack_move_speed
 	velocity.z = _attack_direction.z * attack_move_speed
 	look_toward_direction(_attack_direction, delta)
-	attack_cast.deal_damage(10.0 + stats.get_damage_modifier(), stats.get_crit_chance())
+	attack_cast.deal_damage(user_interface.inventory.get_weapon_value(), stats.get_crit_chance())
 
 
 func handle_idle_physics_frame(delta: float, direction: Vector3) -> void:
@@ -167,4 +170,4 @@ func _on_health_component_defeat() -> void:
 
 
 func _on_rig_heavy_attack() -> void:
-	area_attack.deal_damage(10.0 + stats.get_damage_modifier(), stats.get_crit_chance())
+	area_attack.deal_damage(user_interface.inventory.get_weapon_value(), stats.get_crit_chance())

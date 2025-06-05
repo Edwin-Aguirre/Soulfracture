@@ -1,10 +1,11 @@
-[gd_scene load_steps=24 format=3 uid="uid://dwnlq1e1vxy6d"]
+[gd_scene load_steps=26 format=3 uid="uid://dwnlq1e1vxy6d"]
 
 [ext_resource type="Script" uid="uid://vhynmyjavexb" path="res://UserInterface/inventory.gd" id="1_6ivh5"]
 [ext_resource type="Texture2D" uid="uid://dfy1d6t4m7my6" path="res://Assets/UIAssets/Window/window_header.png" id="1_hqat6"]
 [ext_resource type="FontFile" uid="uid://d2qqktjwc4aub" path="res://Assets/UIAssets/Fonts/Libre_Caslon_Text/LibreCaslonText-Bold.ttf" id="2_w4h00"]
 [ext_resource type="StyleBox" uid="uid://5jr38nxt8fad" path="res://UserInterface/ui_panel.tres" id="3_w4h00"]
 [ext_resource type="Texture2D" uid="uid://kihtdveroea6" path="res://Assets/UIAssets/Icons/spell_slot_empty.png" id="4_c11vl"]
+[ext_resource type="Texture2D" uid="uid://bii5solqgnjtr" path="res://Assets/UIAssets/Window/NumberFrame.png" id="5_0fgy1"]
 [ext_resource type="Script" uid="uid://cdt7w2oojutsp" path="res://UserInterface/controller_character_rotate.gd" id="5_2pqip"]
 [ext_resource type="FontFile" uid="uid://tptndhr3cfgq" path="res://Assets/UIAssets/Fonts/Libre_Caslon_Text/LibreCaslonText-Italic.ttf" id="5_6ivh5"]
 [ext_resource type="Script" uid="uid://c30dqjov25ltb" path="res://UserInterface/mouse_character_rotate.gd" id="5_pvbvh"]
@@ -25,6 +26,17 @@ fill_to = Vector2(0, 1)
 font = ExtResource("2_w4h00")
 font_size = 48
 
+[sub_resource type="LabelSettings" id="LabelSettings_w4h00"]
+font = ExtResource("2_w4h00")
+font_size = 48
+font_color = Color(0.960784, 0.717647, 0.423529, 1)
+shadow_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_f2s47"]
+font = ExtResource("2_w4h00")
+font_size = 26
+font_color = Color(0.960784, 0.717647, 0.360784, 1)
+
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_54b6e"]
 sky_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
 ground_horizon_color = Color(0.662243, 0.671743, 0.686743, 1)
@@ -40,12 +52,6 @@ glow_enabled = true
 
 [sub_resource type="World3D" id="World3D_2pqip"]
 environment = SubResource("Environment_qnmx2")
-
-[sub_resource type="LabelSettings" id="LabelSettings_w4h00"]
-font = ExtResource("2_w4h00")
-font_size = 48
-font_color = Color(0.960784, 0.717647, 0.423529, 1)
-shadow_color = Color(0, 0, 0, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_iclm4"]
 font = ExtResource("5_6ivh5")
@@ -124,6 +130,70 @@ custom_minimum_size = Vector2(950, 0)
 layout_mode = 2
 theme_override_styles/panel = ExtResource("3_w4h00")
 
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/HeldItems"]
+layout_mode = 2
+
+[node name="ItemGrid" type="GridContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/HeldItems/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 3.0
+columns = 7
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/VBoxContainer/HBoxContainer/HeldItems/VBoxContainer"]
+layout_mode = 2
+
+[node name="EquipmentLabel" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/HeldItems/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 8
+text = "Equipment"
+label_settings = SubResource("LabelSettings_w4h00")
+horizontal_alignment = 1
+
+[node name="ItemSlotGrid" type="GridContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/HeldItems/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 6
+columns = 3
+
+[node name="WeaponSlot" type="CenterContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/HeldItems/VBoxContainer/ItemSlotGrid"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+
+[node name="ShieldSlot" type="CenterContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/HeldItems/VBoxContainer/ItemSlotGrid"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+
+[node name="ArmorSlot" type="CenterContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/HeldItems/VBoxContainer/ItemSlotGrid"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+
+[node name="GoldFrame" type="TextureRect" parent="MarginContainer/VBoxContainer/HBoxContainer/HeldItems/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+texture = ExtResource("5_0fgy1")
+
+[node name="GoldLabel" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/HeldItems/VBoxContainer/GoldFrame"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "0g"
+label_settings = SubResource("LabelSettings_f2s47")
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="SubViewportContainer" type="SubViewportContainer" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 custom_minimum_size = Vector2(590, 0)
 layout_mode = 2
@@ -138,7 +208,7 @@ size = Vector2i(590, 1200)
 render_target_update_mode = 4
 script = ExtResource("5_2pqip")
 
-[node name="Rig" parent="MarginContainer/VBoxContainer/HBoxContainer/SubViewportContainer/SubViewport" instance=ExtResource("5_qnmx2")]
+[node name="Rig" parent="MarginContainer/VBoxContainer/HBoxContainer/SubViewportContainer/SubViewport" groups=["PlayerRig"] instance=ExtResource("5_qnmx2")]
 
 [node name="Camera3D" type="Camera3D" parent="MarginContainer/VBoxContainer/HBoxContainer/SubViewportContainer/SubViewport"]
 transform = Transform3D(1, 0, 0, 0, 0.906308, 0.422618, 0, -0.422618, 0.906308, -0.025, 2.4, 3)
@@ -172,7 +242,7 @@ horizontal_alignment = 1
 [node name="GridContainer" type="GridContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/CharacterSheet/VBoxContainer"]
 layout_mode = 2
 theme_override_constants/h_separation = -300
-theme_override_constants/v_separation = 50
+theme_override_constants/v_separation = 25
 columns = 2
 
 [node name="Attribute" type="TextureRect" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/CharacterSheet/VBoxContainer/GridContainer"]
@@ -294,16 +364,21 @@ horizontal_alignment = 1
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/CharacterSheet/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
+size_flags_vertical = 4
 
-[node name="PanelContainer" type="PanelContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/CharacterSheet/VBoxContainer/HBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/CharacterSheet/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 50
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/CharacterSheet/VBoxContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_styles/panel = ExtResource("3_w4h00")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/CharacterSheet/VBoxContainer/HBoxContainer/PanelContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/CharacterSheet/VBoxContainer/HBoxContainer/VBoxContainer/PanelContainer"]
 layout_mode = 2
 theme_override_constants/separation = 30
 
-[node name="AttributeName" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/CharacterSheet/VBoxContainer/HBoxContainer/PanelContainer/HBoxContainer"]
+[node name="AttributeName" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/CharacterSheet/VBoxContainer/HBoxContainer/VBoxContainer/PanelContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Attack Damage"
@@ -311,7 +386,30 @@ label_settings = SubResource("LabelSettings_iclm4")
 horizontal_alignment = 1
 uppercase = true
 
-[node name="AttackValue" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/CharacterSheet/VBoxContainer/HBoxContainer/PanelContainer/HBoxContainer"]
+[node name="AttackValue" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/CharacterSheet/VBoxContainer/HBoxContainer/VBoxContainer/PanelContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "0"
+label_settings = SubResource("LabelSettings_1aauh")
+horizontal_alignment = 1
+
+[node name="PanelContainer2" type="PanelContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/CharacterSheet/VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_styles/panel = ExtResource("3_w4h00")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/CharacterSheet/VBoxContainer/HBoxContainer/VBoxContainer/PanelContainer2"]
+layout_mode = 2
+theme_override_constants/separation = 30
+
+[node name="AttributeName" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/CharacterSheet/VBoxContainer/HBoxContainer/VBoxContainer/PanelContainer2/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Armor Protection"
+label_settings = SubResource("LabelSettings_iclm4")
+horizontal_alignment = 1
+uppercase = true
+
+[node name="ArmorValue" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/CharacterSheet/VBoxContainer/HBoxContainer/VBoxContainer/PanelContainer2/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "0"
