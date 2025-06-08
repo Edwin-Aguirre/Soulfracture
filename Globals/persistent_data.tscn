@@ -30,6 +30,8 @@ mouse_filter = 2
 
 [node name="WeaponIcon" parent="WeaponNode" instance=ExtResource("2_bpa62")]
 layout_mode = 0
+offset_right = 128.0
+offset_bottom = 128.0
 
 [node name="ShieldNode" type="Control" parent="."]
 anchors_preset = 0
@@ -39,6 +41,8 @@ mouse_filter = 2
 
 [node name="ShieldIcon" parent="ShieldNode" instance=ExtResource("3_plh7v")]
 layout_mode = 0
+offset_right = 128.0
+offset_bottom = 128.0
 protection = 5
 item_model = ExtResource("4_7uppw")
 
@@ -50,5 +54,7 @@ mouse_filter = 2
 
 [node name="ArmorIcon" parent="ArmorNode" instance=ExtResource("5_lwfvh")]
 layout_mode = 0
+offset_right = 128.0
+offset_bottom = 128.0
 protection = 20
 armor = 0

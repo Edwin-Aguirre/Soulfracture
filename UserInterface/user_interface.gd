@@ -46,6 +46,10 @@ func open_menu() -> void:
 	inventory.visible = true
 	get_tree().paused = true
 	inventory.update_gear_stats()
+	
+	await get_tree().process_frame  #  Wait for UI to fully render
+	inventory.refresh_focus_mode()  #  Ensure buttons are focusable
+	inventory.focus_first_item()    #  Now grab focus
 
 
 func close_menu() -> void:

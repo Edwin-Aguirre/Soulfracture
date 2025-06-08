@@ -10,5 +10,5 @@ signal interact(item)
 
 
 func _on_gui_input(event: InputEvent) -> void:
-	if event.is_action("attack"):
+	if event.is_action_pressed("attack") || event.is_action_pressed("select"):
 		interact.emit(self)
